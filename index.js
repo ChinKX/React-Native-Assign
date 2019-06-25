@@ -5,7 +5,8 @@ import React, { Component } from 'react';
 import {AppRegistry} from 'react-native';
 import {name as appName} from './app.json';
 import Login from './src/screens/Login';
-import Start from './src/screens/Start.js';
+import Start from './src/screens/Start';
+import Map from './src/screens/Map';
 
 class TravelApp extends Component {
     _isMounted = false;
@@ -23,7 +24,8 @@ class TravelApp extends Component {
 
     render() {
         const { currentScreen } = this.state
-        let mainScreen = currentScreen === 'Start' ? <Start /> : <Login />
+        //let mainScreen = currentScreen === 'Start' ? <Start /> : <Login />
+        let mainScreen = <Map />
         return mainScreen
     }
 
