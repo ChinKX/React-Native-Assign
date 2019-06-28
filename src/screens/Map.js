@@ -57,7 +57,7 @@ const Images = [
 const { width, height } = Dimensions.get("window");
 
 const CARD_HEIGHT = height / 4;
-const CARD_WIDTH = CARD_HEIGHT - 50;
+const CARD_WIDTH = CARD_HEIGHT + 80;
 
 export default class screens extends Component {
   state = {
@@ -96,6 +96,15 @@ export default class screens extends Component {
         },
         title: "Fourth Best Place",
         description: "This is the fourth best place in Portland",
+        image: Images[3],
+      },
+      {
+        coordinate: {
+          latitude: 45.521016,
+          longitude: -122.6441515,
+        },
+        title: "Fifth Best Place",
+        description: "This is the fifth best place in Portland",
         image: Images[3],
       },
     ],
@@ -190,13 +199,12 @@ export default class screens extends Component {
           })}
         </MapView>
         <Animated.ScrollView
-        
           horizontal
           scrollEventThrottle={1}
           showsHorizontalScrollIndicator={false}
-          declarationRate={"fast"}
-          snapToInterval={CARD_WIDTH}
-          snapToAlignment={"center"}
+          decelerationRate={0}
+          snapToInterval={CARD_WIDTH + 20}
+          snapToAlignment={'center'}
           onScroll={Animated.event(
             [
               {
@@ -242,16 +250,17 @@ const styles = StyleSheet.create({
     bottom: 30,
     left: 0,
     right: 0,
-    paddingVertical: 10,
+    paddingVertical: 5,
   },
   endPadding: {
-    paddingRight: width - CARD_WIDTH,
+    paddingRight: width - CARD_WIDTH - 80,
+    paddingLeft: width - CARD_WIDTH - 80,
   },
   card: {
     padding: 10,
     elevation: 2,
     backgroundColor: "#FFF",
-    marginHorizontal: 10,
+    marginHorizontal: 8,
     shadowColor: "#000",
     shadowRadius: 5,
     shadowOpacity: 0.3,
