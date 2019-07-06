@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {
-    Text, TextInput, Keyboard,
+    Text, TextInput, Keyboard, ActivityIndicator,
     TouchableOpacity, KeyboardAvoidingView, Animated,
 } from 'react-native';
 import styles, { IMAGE_HEIGHT, IMAGE_HEIGHT_SMALL } from '../styles';
@@ -70,6 +70,21 @@ export default class Login extends Component {
         this.setState({email: '', password: '', errorMessage: '', loading: false})
     }
     
+    renderButton() {
+        if (this.state.loading) {
+          return(
+              <View style={styles.spinnerStyle}>
+                 <ActivityIndicator size={"small"} />
+              </View>
+          );
+        }
+        return (
+            <TouchableOpacity style={styles.buttonContainer} onPress={() => this.loginUser(this.state.email, this.state.password)}>
+                <Text style={styles.buttonText}>SIGN IN</Text>
+            </TouchableOpacity>
+        );
+      }
+
     render() {
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
@@ -91,10 +106,6 @@ export default class Login extends Component {
                     onChangeText={(password) => this.setState({password})}
                     ref={"txtPassword"}
                 />
-                
-                <TouchableOpacity style={styles.buttonContainer} onPress={() => this.loginUser(this.state.email, this.state.password)}>
-                    <Text style={styles.buttonText}>SIGN IN</Text>
-                </TouchableOpacity>
 
                 <Text style={styles.errorTextStyle}>
                     {this.state.errorMessage}
