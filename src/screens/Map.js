@@ -1,44 +1,8 @@
-/*
-import React, { Component } from 'react'
-import { StyleSheet } from 'react-native'
-import MapView from 'react-native-maps';
-
-export default class Map extends Component {
-    render() {
-        return (
-            <MapView
-                style={styles.map}
-                initialRegion={{
-                latitude: 13.4124693,
-                longitude: 103.864797,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-                }}
-            />
-        )
-    }
-}
-
-const styles = StyleSheet.create({
-    container: {
-        ...StyleSheet.absoluteFillObject,
-        height: 400,
-        width: 400,
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-    },
-    map: {
-        flex: 1
-    },
-});*/
-
 import React, { Component } from "react";
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
-  ScrollView,
   Animated,
   Image,
   Dimensions,
@@ -46,6 +10,8 @@ import {
 } from "react-native";
 
 import MapView from "react-native-maps";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import firebase from 'firebase';
 
 const Images = [
   //{ uri: "https://i.imgur.com/sNam9iJ.jpg" },
@@ -254,6 +220,9 @@ export default class screens extends Component {
             </TouchableOpacity>
           ))}
         </Animated.ScrollView>
+        <TouchableOpacity style={styles.fab} onPress={() => firebase.auth().signOut()}>
+            <Icon name="exit-to-app" size={25} style={{color: 'white'}} />
+        </TouchableOpacity>
       </View>
     );
   }
@@ -324,4 +293,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "rgba(220,20,60, 0.5)",
   },
+  fab: {
+    height: 50,
+    width: 50,
+    borderRadius: 200,
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor:'#686cc3',
+  }
 });

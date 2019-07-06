@@ -23,9 +23,9 @@ export default StyleSheet.create({
     height: 60,
     width: 300,
     resizeMode: 'contain',
-    marginBottom: 10,
+    marginBottom: 0,
     padding: 10,
-    marginTop: 160
+    marginTop: 130
   },
   buttonContainer: {
     backgroundColor: '#f7c744',

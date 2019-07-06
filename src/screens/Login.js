@@ -6,17 +6,6 @@ import {
 import styles, { IMAGE_HEIGHT, IMAGE_HEIGHT_SMALL } from '../styles';
 import firebase from 'firebase';
 
-// Initialize Firebase
-const firebaseConfig = {
-    apiKey: "AIzaSyCj-CRL0485f6poJujp4K2458Y0KEjTNQ4",
-    authDomain: "react-native-assign.firebaseapp.com",
-    databaseURL: "https://react-native-assign.firebaseio.com",
-    projectId: "react-native-assign",
-    storageBucket: "",
-};
-
-firebase.initializeApp(firebaseConfig);
-
 export default class Login extends Component {
     constructor(props) {
         super(props)
