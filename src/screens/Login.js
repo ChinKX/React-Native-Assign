@@ -107,6 +107,8 @@ export default class Login extends Component {
                     ref={"txtPassword"}
                 />
 
+                {this.renderButton()}
+
                 <Text style={styles.errorTextStyle}>
                     {this.state.errorMessage}
                 </Text>
