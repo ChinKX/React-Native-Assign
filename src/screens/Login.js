@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import {
-    Text, View, TouchableWithoutFeedback, TextInput, Keyboard,
-    TouchableOpacity, KeyboardAvoidingView, Animated, SafeAreaView
+    Text, TextInput, Keyboard,
+    TouchableOpacity, KeyboardAvoidingView, Animated,
 } from 'react-native';
 import styles, { IMAGE_HEIGHT, IMAGE_HEIGHT_SMALL } from '../styles';
-import firebase from "firebase";
+import firebase from 'firebase';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -24,6 +24,7 @@ export default class Login extends Component {
         this.state = ({
             email: '',
             password: '',
+            errorMessage: '',
         })
 
         this.imageHeight = new Animated.Value(IMAGE_HEIGHT);
@@ -51,6 +52,7 @@ export default class Login extends Component {
         }).start();
     };
 
+    /*
     signupUser = (email, password) => {
         try {
             if (this.state.password < 6) {
@@ -63,20 +65,22 @@ export default class Login extends Component {
             console.log(error.toString())
         }
     }
+    */
 
     loginUser = (email, password) => {
-        try {
-            firebase.auth().signInWithEmailAndPassword(email, password).then(res => {
-            console.log(res.user.email)
-            console.log("enter")
-
-            })
-        } catch(error) {
-            console.log(error.toString())
-            console.log("error")
-        }
+        this.setState({ error: '', loading: true });
+        //const { email, password } = this.state;
+        firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(this.onLoginSuccess.bind(this))
+        .catch(error => this.setState({ errorMessage: error.message }))
     }
 
+    onLoginSuccess() {
+        alert("Login Successfully")
+        this.props.loggedIn = true;
+        this.setState({email: '', password: '', errorMessage: '', loading: false})
+    }
+    
     render() {
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
@@ -98,12 +102,14 @@ export default class Login extends Component {
                     onChangeText={(password) => this.setState({password})}
                     ref={"txtPassword"}
                 />
+                
                 <TouchableOpacity style={styles.buttonContainer} onPress={() => this.loginUser(this.state.email, this.state.password)}>
                     <Text style={styles.buttonText}>SIGN IN</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.buttonContainer} onPress={() => this.signupUser(this.state.email, this.state.password)}>
-                    <Text style={styles.buttonText}>SIGN UP</Text>
-                </TouchableOpacity>
+
+                <Text style={styles.errorTextStyle}>
+                    {this.state.errorMessage}
+                </Text>
             </KeyboardAvoidingView>
         )
     }

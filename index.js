@@ -25,7 +25,7 @@ class TravelApp extends Component {
     render() {
         const { currentScreen } = this.state
         //let mainScreen = currentScreen === 'Start' ? <Start /> : <Login />
-        let mainScreen = <Map />
+        let mainScreen = <Login />
         return mainScreen
     }
 

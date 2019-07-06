@@ -48,10 +48,15 @@ import {
 import MapView from "react-native-maps";
 
 const Images = [
-  { uri: "https://i.imgur.com/sNam9iJ.jpg" },
-  { uri: "https://i.imgur.com/N7rlQYt.jpg" },
-  { uri: "https://i.imgur.com/UDrH0wm.jpg" },
-  { uri: "https://i.imgur.com/Ka8kNST.jpg" }
+  //{ uri: "https://i.imgur.com/sNam9iJ.jpg" },
+  //{ uri: "https://i.imgur.com/N7rlQYt.jpg" },
+  //{ uri: "https://i.imgur.com/UDrH0wm.jpg" },
+  //{ uri: "https://i.imgur.com/Ka8kNST.jpg" },
+  require('../images/AngkorWat.jpg'),
+  require('../images/DemonsGallery.jpg'),
+  require('../images/LankaGallery.jpg'),
+  require('../images/TerraceOfHonor.jpg'),
+  require('../images/SecondGallery.jpg'),
 ]
 
 const { width, height } = Dimensions.get("window");
@@ -59,60 +64,64 @@ const { width, height } = Dimensions.get("window");
 const CARD_HEIGHT = height / 4;
 const CARD_WIDTH = CARD_HEIGHT + 80;
 
+const ASPECT_RATIO = width / height
+const LATITUDE_DELTA = 0.0043 //zoom level
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO
+
 export default class screens extends Component {
   state = {
     markers: [
       {
         coordinate: {
-          latitude: 45.524548,
-          longitude: -122.6749817,
+          latitude: 13.412471,
+          longitude: 103.866995,
         },
-        title: "Best Place",
+        title: "Angkor Wat",
         description: "This is the best place in Portland",
         image: Images[0],
       },
       {
         coordinate: {
-          latitude: 45.524698,
-          longitude: -122.6655507,
+          latitude: 13.412990,
+          longitude: 103.867857,
         },
-        title: "Second Best Place",
+        title: "Vishnu Conquers Demons Gallery",
         description: "This is the second best place in Portland",
         image: Images[1],
       },
       {
         coordinate: {
-          latitude: 45.5230786,
-          longitude: -122.6701034,
+          latitude: 13.412504,
+          longitude: 103.865490,
         },
-        title: "Third Best Place",
+        title: "Terrace of Honor",
         description: "This is the third best place in Portland",
         image: Images[2],
       },
       {
         coordinate: {
-          latitude: 45.521016,
-          longitude: -122.6561917,
+          latitude: 13.413021,
+          longitude: 103.865874,
         },
-        title: "Fourth Best Place",
+        title: "Battle of Lanka Gallery",
         description: "This is the fourth best place in Portland",
         image: Images[3],
       },
       {
         coordinate: {
-          latitude: 45.521016,
-          longitude: -122.6441515,
+          latitude: 13.412495,
+          longitude: 103.866410,
         },
-        title: "Fifth Best Place",
+        title: "Second Gallery",
         description: "This is the fifth best place in Portland",
-        image: Images[3],
+        image: Images[4],
       },
     ],
     region: {
-      latitude: 45.52220671242907,
-      longitude: -122.6653281029795,
-      latitudeDelta: 0.04864195044303443,
-      longitudeDelta: 0.040142817690068,
+      latitude: 13.412478,
+      longitude: 103.866995,
+      latitudeDelta: LATITUDE_DELTA,
+      longitudeDelta: LONGITUDE_DELTA,
     },
   };
 
@@ -189,7 +198,11 @@ export default class screens extends Component {
               opacity: interpolations[index].opacity,
             };
             return (
-              <MapView.Marker key={index} coordinate={marker.coordinate}>
+              <MapView.Marker
+                key={index}
+                coordinate={marker.coordinate}
+                title={marker.title}
+              > 
                 <Animated.View style={[styles.markerWrap, opacityStyle]}>
                   <Animated.View style={[styles.ring, scaleStyle]} />
                   <View style={styles.marker} />
@@ -201,10 +214,11 @@ export default class screens extends Component {
         <Animated.ScrollView
           horizontal
           scrollEventThrottle={1}
-          showsHorizontalScrollIndicator={false}
+          showsHorizontalScrollIndicator={true}
           decelerationRate={0}
           snapToInterval={CARD_WIDTH + 20}
           snapToAlignment={'center'}
+          keyboardShouldPersistTaps="always"
           onScroll={Animated.event(
             [
               {
@@ -221,7 +235,11 @@ export default class screens extends Component {
           contentContainerStyle={styles.endPadding}
         >
           {this.state.markers.map((marker, index) => (
-            <View style={styles.card} key={index}>
+            <TouchableOpacity
+              onPress={() => alert("Pressed")}
+              style={styles.card}
+              key={index}
+            >
               <Image
                 source={marker.image}
                 style={styles.cardImage}
@@ -233,7 +251,7 @@ export default class screens extends Component {
                   {marker.description}
                 </Text>
               </View>
-            </View>
+            </TouchableOpacity>
           ))}
         </Animated.ScrollView>
       </View>
