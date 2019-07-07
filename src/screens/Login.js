@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {
-    Text, TextInput, Keyboard, ActivityIndicator,
+    View, Text, TextInput, Keyboard, ActivityIndicator,
     TouchableOpacity, KeyboardAvoidingView, Animated,
 } from 'react-native';
 import styles, { IMAGE_HEIGHT, IMAGE_HEIGHT_SMALL } from '../styles';
@@ -57,16 +57,15 @@ export default class Login extends Component {
     */
 
     loginUser = (email, password) => {
-        this.setState({ error: '', loading: true });
+        this.setState({ errorMessage: '', loading: true });
         //const { email, password } = this.state;
         firebase.auth().signInWithEmailAndPassword(email, password)
         .then(this.onLoginSuccess.bind(this))
-        .catch(error => this.setState({ errorMessage: error.message }))
+        .catch(error => this.setState({ errorMessage: error.message, loading: false }))
     }
 
     onLoginSuccess() {
         alert("Login Successfully")
-        this.props.loggedIn = true;
         this.setState({email: '', password: '', errorMessage: '', loading: false})
     }
     
